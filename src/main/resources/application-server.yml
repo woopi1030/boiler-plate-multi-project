@@ -1,0 +1,12 @@
+spring.config.activate.on-profile: local
+
+server:
+  port: 8080
+  shutdown: graceful
+
+---
+spring.config.activate.on-profile: development
+
+server:
+  port: 8080
+  shutdown: graceful

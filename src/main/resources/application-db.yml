@@ -1,0 +1,48 @@
+spring.config.activate.on-profile: local
+
+# 데이터베이스 설정
+# DB 종류
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MySQL;DATABASE_TO_UPPER=FALSE
+    # url: jdbc:h2:file:./target/h2db/db/application;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=FALSE
+    driver-class-name: org.h2.Driver
+    username: woopi
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  sql:
+    # DB초기화(schema.sql, data.sql) , [always : 기동 시 매번 동작, never : 기동 시 동작하지 않음]
+    init:
+      schema-locations: classpath*:initdata/h2db/schema.sql
+      data-locations: classpath*:initdata/h2db/data.sql
+      mode: always
+      encoding: utf-8
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    #jpa 사용 환경에서 data.sql을 정상적으로 동작하게 하는 옵션
+    defer-datasource-initialization: true
+    show-sql: true
+
+---
+spring.config.activate.on-profile: development
+
+spring:
+  datasource:
+    hikari:
+    # 마스터 설정
+      master:
+        jdbc-url: jdbc:mariadb://localhost:13306/test
+        username: repluser
+        password: 1234
+        driver-class-name: org.mariadb.jdbc.Driver
+    # 슬레이브 설정
+      slave:
+        jdbc-url: jdbc:mariadb://localhost:13307/test
+        username: repluser
+        password: 1234
+        driver-class-name: org.mariadb.jdbc.Driver

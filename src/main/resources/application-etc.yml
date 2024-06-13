@@ -1,0 +1,12 @@
+# Aws parameter store를 사용하기 위한 설정 값
+# awsParameterStorePropertySource:
+#   enabled: true
+
+# application:
+#   name: ${/application/name/boiler-plate}
+
+spring.config.activate.on-profile: local
+
+---
+spring.config.activate.on-profile: development
+
